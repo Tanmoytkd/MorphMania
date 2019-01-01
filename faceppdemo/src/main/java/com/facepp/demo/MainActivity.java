@@ -453,20 +453,20 @@ public class MainActivity extends Activity implements OnClickListener {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            ViewHoder hoder;
+            ViewHoder holder;
             if (convertView == null) {
                 convertView = mInflater.inflate(R.layout.cameralist_item, null);
-                hoder = new ViewHoder();
-                hoder.name = convertView.findViewById(R.id.cameralist_item_nameText);
-                convertView.setTag(hoder);
+                holder = new ViewHoder();
+                holder.name = convertView.findViewById(R.id.cameralist_item_nameText);
+                convertView.setTag(holder);
             } else {
-                hoder = (ViewHoder) convertView.getTag();
+                holder = (ViewHoder) convertView.getTag();
             }
 
             HashMap<String, Integer> map = cameraSize.get(position);
 
             String hoderNameText = map.get("width") + " * " + map.get("height");
-            hoder.name.setText(hoderNameText);
+            holder.name.setText(hoderNameText);
             return convertView;
         }
 
