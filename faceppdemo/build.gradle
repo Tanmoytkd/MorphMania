@@ -1,0 +1,74 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion CompileSdkVersion
+    buildToolsVersion '28.0.2'
+
+    signingConfigs {
+        release {
+            keyAlias 'facepp'
+            keyPassword 'xfdq1016'
+            storeFile file(project.rootDir.absolutePath + '/facepp.keystore')
+            storePassword 'xfdq1016'
+        }
+    }
+
+    defaultConfig {
+        applicationId "com.megvii.test"
+        minSdkVersion 19
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+    }
+
+    android {
+        lintOptions {
+            abortOnError false
+        }
+    }
+
+    lintOptions {
+        abortOnError false
+    }
+
+
+
+    repositories {
+        flatDir {
+            dirs 'libs'
+        }
+    }
+
+//    sourceSets { main { res.srcDirs = ['src/main/res', 'src/main/res/raw'] } }
+}
+
+
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    implementation "com.android.support:appcompat-v7:${SupportLibraryVersion}"
+//    implementation(name: 'MGFaceppSDK-0.5.0', ext: 'aar')
+    //implementation(name:'MGLicenseManagerSDK-0.3.0', ext:'aar')
+    implementation "com.android.support:appcompat-v7:${SupportLibraryVersion}"
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+    testImplementation 'junit:junit:4.12'
+//    implementation 'com.github.FacePlusPlus:MegviiLicMgr-Android-SDK:0.3.0'
+//    implementation 'com.github.FacePlusPlus:MegviiFacepp-Android-SDK:0.4.7-gitpack'
+    implementation(name: 'MGLicenseManagerSDK-0.3.1', ext: 'aar')
+    implementation(name: 'MGFaceppSDK-0.5.2', ext: 'aar')
+//    implementation project(':sdk')
+}
