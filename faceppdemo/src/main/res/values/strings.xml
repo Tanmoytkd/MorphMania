@@ -18,7 +18,7 @@
     <string name="one_face_trackig">One Face Tracking</string>
     <string name="trackig_mode">Tracking Mode</string>
     <string name="face_compare">Face Compare</string>
-    <string name="detect_face">Detect Face</string>
+    <string name="detect_face">Take Picture</string>
     <string name="fast">Fast</string>
     <string name="robust">Robust</string>
     <string name="normal">Normal</string>

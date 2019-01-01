@@ -70,5 +70,6 @@ dependencies {
 //    implementation 'com.github.FacePlusPlus:MegviiFacepp-Android-SDK:0.4.7-gitpack'
     implementation(name: 'MGLicenseManagerSDK-0.3.1', ext: 'aar')
     implementation(name: 'MGFaceppSDK-0.5.2', ext: 'aar')
+    implementation 'com.android.support:recyclerview-v7:26.0.+'
 //    implementation project(':sdk')
 }

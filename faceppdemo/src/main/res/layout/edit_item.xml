@@ -31,7 +31,7 @@
             android:singleLine="true"
             android:text="InBound"
             android:textColor="#30364C"
-            android:textSize="10sp" />
+            android:textSize="12sp" />
     </LinearLayout>
 
 </RelativeLayout>

@@ -41,128 +41,129 @@
         android:layout_height="match_parent"
         android:layout_above="@+id/landmark_enterBtn"
         android:layout_below="@+id/landmark_logo"
-        android:layout_marginBottom="20dip"
+        android:layout_marginBottom="10dip"
         android:layout_marginTop="20dip"
         android:paddingLeft="25dip"
         android:paddingRight="25dip"
         android:scrollbars="none"
         android:layout_centerInParent="true">
 
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:orientation="horizontal"
-                android:baselineAligned="false">
+                android:baselineAligned="false"
+                android:orientation="horizontal">
 
                 <RelativeLayout
                     android:layout_width="0dip"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1" >
+                    android:layout_weight="1">
 
                     <include
                         android:id="@+id/landmark_imageitem_0"
+                        layout="@layout/image_item"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        layout="@layout/image_item" />
+                        android:layout_height="wrap_content" />
                 </RelativeLayout>
 
                 <RelativeLayout
                     android:layout_width="0dip"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1" >
+                    android:layout_weight="1">
 
                     <include
                         android:id="@+id/landmark_imageitem_1"
+                        layout="@layout/image_item"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        layout="@layout/image_item" />
+                        android:layout_centerHorizontal="true" />
                 </RelativeLayout>
 
                 <RelativeLayout
                     android:layout_width="0dip"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1" >
+                    android:layout_weight="1">
 
                     <include
                         android:id="@+id/landmark_imageitem_2"
+                        layout="@layout/image_item"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        layout="@layout/image_item" />
+                        android:layout_alignParentEnd="true" />
                 </RelativeLayout>
             </LinearLayout>
 
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="1dip"
-                android:layout_marginBottom="10dip"
                 android:layout_marginTop="10dip"
+                android:layout_marginBottom="10dip"
                 android:background="#D0D0D0"
                 android:contentDescription="@string/todo" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical" >
+                android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:orientation="horizontal"
-                    android:baselineAligned="false">
+                    android:baselineAligned="false"
+                    android:orientation="horizontal">
 
                     <RelativeLayout
                         android:layout_width="0dip"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1" >
+                        android:layout_weight="1">
 
                         <include
                             android:id="@+id/landmark_imageitem_3"
+                            layout="@layout/image_item"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            layout="@layout/image_item" />
+                            android:layout_height="wrap_content" />
                     </RelativeLayout>
 
                     <RelativeLayout
                         android:layout_width="0dip"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1" >
+                        android:layout_weight="1">
 
                         <include
                             android:id="@+id/landmark_imageitem_4"
+                            layout="@layout/image_item"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_centerHorizontal="true"
-                            layout="@layout/image_item" />
+                            android:layout_centerHorizontal="true" />
                     </RelativeLayout>
 
                     <RelativeLayout
                         android:layout_width="0dip"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1" >
+                        android:layout_weight="1">
 
                         <include
                             android:id="@+id/landmark_imageitem_5"
+                            layout="@layout/image_item"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            layout="@layout/image_item" />
+                            android:layout_alignParentEnd="true" />
                     </RelativeLayout>
                 </LinearLayout>
 
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="1dip"
-                    android:layout_marginBottom="15dip"
                     android:layout_marginTop="10dip"
+                    android:layout_marginBottom="15dip"
                     android:background="#D0D0D0"
                     android:contentDescription="@string/todo" />
 
@@ -170,19 +171,19 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:orientation="horizontal"
-                    android:baselineAligned="false">
+                    android:baselineAligned="false"
+                    android:orientation="horizontal">
 
                     <RelativeLayout
                         android:layout_width="0dip"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1" >
+                        android:layout_weight="1">
 
                         <include
                             android:id="@+id/landmark_edititem_0"
+                            layout="@layout/edit_item"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            layout="@layout/edit_item"
                             android:clickable="true"
                             android:focusable="true" />
                     </RelativeLayout>
@@ -190,14 +191,14 @@
                     <RelativeLayout
                         android:layout_width="0dip"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1.2" >
+                        android:layout_weight="1.2">
 
                         <include
                             android:id="@+id/landmark_edititem_1"
+                            layout="@layout/edit_item"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerHorizontal="true"
-                            layout="@layout/edit_item"
                             android:clickable="true"
                             android:focusable="true" />
                     </RelativeLayout>
@@ -205,14 +206,14 @@
                     <RelativeLayout
                         android:layout_width="0dip"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1" >
+                        android:layout_weight="1">
 
                         <include
                             android:id="@+id/landmark_edititem_2"
+                            layout="@layout/edit_item"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
-                            layout="@layout/edit_item"
                             android:clickable="true"
                             android:focusable="true" />
                     </RelativeLayout>
@@ -221,8 +222,8 @@
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="1dip"
-                    android:layout_marginBottom="0dip"
                     android:layout_marginTop="15dip"
+                    android:layout_marginBottom="0dip"
                     android:background="#D0D0D0"
                     android:contentDescription="@string/todo" />
 
@@ -231,56 +232,56 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dip"
                     android:layout_weight="1"
-                    android:orientation="horizontal"
-                    android:baselineAligned="false">
+                    android:baselineAligned="false"
+                    android:orientation="horizontal">
 
                     <RelativeLayout
                         android:layout_width="0dip"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1" >
+                        android:layout_weight="1">
 
                         <include
                             android:id="@+id/landmark_imageitem_6"
+                            layout="@layout/image_item"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            layout="@layout/image_item" />
+                            android:layout_height="wrap_content" />
                     </RelativeLayout>
 
                     <RelativeLayout
                         android:layout_width="0dip"
                         android:layout_height="wrap_content"
                         android:layout_gravity="bottom"
-                        android:layout_weight="1" >
+                        android:layout_weight="1">
 
                         <include
                             android:id="@+id/landmark_edititem_3"
+                            layout="@layout/edit_item"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_centerHorizontal="true"
-                            layout="@layout/edit_item" />
+                            android:layout_centerHorizontal="true" />
                     </RelativeLayout>
 
                     <RelativeLayout
                         android:layout_width="0dip"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:layout_gravity="bottom"
-                        android:visibility="visible" >
+                        android:layout_weight="1"
+                        android:visibility="visible">
 
                         <include
                             android:id="@+id/landmark_edititem_4"
+                            layout="@layout/edit_item"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            layout="@layout/edit_item" />
+                            android:layout_alignParentEnd="true" />
                     </RelativeLayout>
                 </LinearLayout>
 
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="1dip"
-                    android:layout_marginBottom="0dip"
                     android:layout_marginTop="15dip"
+                    android:layout_marginBottom="0dip"
                     android:background="#D0D0D0"
                     android:contentDescription="@string/todo" />
 
@@ -289,48 +290,48 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dip"
                     android:layout_weight="1"
-                    android:orientation="horizontal"
-                    android:baselineAligned="false">
+                    android:baselineAligned="false"
+                    android:orientation="horizontal">
 
                     <RelativeLayout
                         android:layout_width="0dip"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1" >
+                        android:layout_weight="1">
 
                         <include
                             android:id="@+id/landmark_imageitem_7"
+                            layout="@layout/image_item"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            layout="@layout/image_item" />
+                            android:layout_height="wrap_content" />
                     </RelativeLayout>
 
                     <RelativeLayout
                         android:layout_width="0dip"
                         android:layout_height="wrap_content"
                         android:layout_gravity="bottom"
-                        android:layout_weight="1" >
+                        android:layout_weight="1">
 
                         <include
-                            android:visibility="invisible"
+                            layout="@layout/edit_item"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerHorizontal="true"
-                            layout="@layout/edit_item" />
+                            android:visibility="invisible" />
                     </RelativeLayout>
 
                     <RelativeLayout
                         android:layout_width="0dip"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:layout_gravity="bottom"
-                        android:visibility="visible" >
+                        android:layout_weight="1"
+                        android:visibility="visible">
 
                         <include
-                            android:visibility="gone"
+                            layout="@layout/edit_item"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
-                            layout="@layout/edit_item" />
+                            android:visibility="gone" />
                     </RelativeLayout>
                 </LinearLayout>
 
