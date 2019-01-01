@@ -27,9 +27,9 @@
             android:layout_gravity="center_horizontal"
             android:singleLine="true"
             android:gravity="center"
-            android:text="文字识别"
+            android:text="Button"
             android:textColor="#343A4F"
-            android:textSize="10sp" />
+            android:textSize="12sp" />
     </LinearLayout>
 
 </RelativeLayout>

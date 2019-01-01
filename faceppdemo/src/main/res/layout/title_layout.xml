@@ -29,7 +29,8 @@
                 android:layout_marginLeft="5dip"
                 android:clickable="false"
                 android:focusable="false"
-                android:src="@drawable/retunimage" />
+                android:src="@drawable/retunimage"
+                android:contentDescription="@string/todo" />
 
             <TextView
                 android:id="@+id/title_layout_leftText"
@@ -37,11 +38,11 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_gravity="center_vertical"
-                android:layout_marginLeft="5dip"
-                android:layout_marginRight="0dip"
-                android:layout_toRightOf="@+id/title_layout_returnImage"
+                android:layout_marginStart="5dip"
+                android:layout_marginEnd="0dip"
+                android:layout_toEndOf="@+id/title_layout_returnImage"
                 android:singleLine="true"
-                android:text="返回"
+                android:text="@string/back"
                 android:textColor="#FFFFFF"
                 android:textSize="16sp" />
         </RelativeLayout>

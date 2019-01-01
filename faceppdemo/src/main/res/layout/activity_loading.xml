@@ -27,7 +27,7 @@
             android:layout_marginTop="10dip"
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
-            android:text="正在联网授权中..."
+            android:text="@string/app_name"
             android:textColor="#4FA1B7"
             android:textSize="18sp" />
     </LinearLayout>
@@ -42,7 +42,7 @@
         android:layout_marginRight="45dip"
         android:layout_marginTop="120dip"
         android:background="@drawable/bg_button0_select"
-        android:text="重新联网授权"
+        android:text="@string/auth_again"
         android:textColor="#ffffffff"
         android:textSize="16sp"
         android:visibility="gone" />
