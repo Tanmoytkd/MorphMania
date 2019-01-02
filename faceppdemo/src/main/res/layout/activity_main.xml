@@ -15,7 +15,8 @@
     <com.facepp.demo.util.AutoRatioImageview
         android:id="@+id/landmark_logo"
         android:layout_width="100dip"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:adjustViewBounds="true"
         android:layout_below="@+id/landmark_title"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="5dip"
@@ -39,8 +40,8 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/landmark_enterBtn"
-        android:layout_below="@+id/landmark_logo"
+        android:layout_above="@id/landmark_enterBtn"
+        android:layout_below="@id/landmark_logo"
         android:layout_marginBottom="10dip"
         android:layout_marginTop="20dip"
         android:paddingLeft="25dip"
@@ -52,55 +53,11 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center_vertical"
             android:orientation="vertical">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:baselineAligned="false"
-                android:orientation="horizontal">
-
-                <RelativeLayout
-                    android:layout_width="0dip"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1">
-
-                    <include
-                        android:id="@+id/landmark_imageitem_0"
-                        layout="@layout/image_item"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="0dip"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1">
-
-                    <include
-                        android:id="@+id/landmark_imageitem_1"
-                        layout="@layout/image_item"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true" />
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="0dip"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1">
-
-                    <include
-                        android:id="@+id/landmark_imageitem_2"
-                        layout="@layout/image_item"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true" />
-                </RelativeLayout>
-            </LinearLayout>
-
             <ImageView
+                android:id="@+id/startingBar"
                 android:layout_width="match_parent"
                 android:layout_height="1dip"
                 android:layout_marginTop="10dip"
@@ -109,233 +66,32 @@
                 android:contentDescription="@string/todo" />
 
             <LinearLayout
+                android:id="@+id/pictureGrid"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:baselineAligned="false"
-                    android:orientation="horizontal">
-
-                    <RelativeLayout
-                        android:layout_width="0dip"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1">
-
-                        <include
-                            android:id="@+id/landmark_imageitem_3"
-                            layout="@layout/image_item"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                        android:layout_width="0dip"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1">
-
-                        <include
-                            android:id="@+id/landmark_imageitem_4"
-                            layout="@layout/image_item"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerHorizontal="true" />
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                        android:layout_width="0dip"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1">
-
-                        <include
-                            android:id="@+id/landmark_imageitem_5"
-                            layout="@layout/image_item"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true" />
-                    </RelativeLayout>
-                </LinearLayout>
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="1dip"
-                    android:layout_marginTop="10dip"
-                    android:layout_marginBottom="15dip"
-                    android:background="#D0D0D0"
-                    android:contentDescription="@string/todo" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:baselineAligned="false"
-                    android:orientation="horizontal">
-
-                    <RelativeLayout
-                        android:layout_width="0dip"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1">
-
-                        <include
-                            android:id="@+id/landmark_edititem_0"
-                            layout="@layout/edit_item"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:clickable="true"
-                            android:focusable="true" />
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                        android:layout_width="0dip"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1.2">
-
-                        <include
-                            android:id="@+id/landmark_edititem_1"
-                            layout="@layout/edit_item"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerHorizontal="true"
-                            android:clickable="true"
-                            android:focusable="true" />
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                        android:layout_width="0dip"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1">
-
-                        <include
-                            android:id="@+id/landmark_edititem_2"
-                            layout="@layout/edit_item"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            android:clickable="true"
-                            android:focusable="true" />
-                    </RelativeLayout>
-                </LinearLayout>
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="1dip"
-                    android:layout_marginTop="15dip"
-                    android:layout_marginBottom="0dip"
-                    android:background="#D0D0D0"
-                    android:contentDescription="@string/todo" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dip"
-                    android:layout_weight="1"
-                    android:baselineAligned="false"
-                    android:orientation="horizontal">
-
-                    <RelativeLayout
-                        android:layout_width="0dip"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1">
-
-                        <include
-                            android:id="@+id/landmark_imageitem_6"
-                            layout="@layout/image_item"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                        android:layout_width="0dip"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="bottom"
-                        android:layout_weight="1">
-
-                        <include
-                            android:id="@+id/landmark_edititem_3"
-                            layout="@layout/edit_item"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerHorizontal="true" />
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                        android:layout_width="0dip"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="bottom"
-                        android:layout_weight="1"
-                        android:visibility="visible">
-
-                        <include
-                            android:id="@+id/landmark_edititem_4"
-                            layout="@layout/edit_item"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true" />
-                    </RelativeLayout>
-                </LinearLayout>
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="1dip"
-                    android:layout_marginTop="15dip"
-                    android:layout_marginBottom="0dip"
-                    android:background="#D0D0D0"
-                    android:contentDescription="@string/todo" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dip"
-                    android:layout_weight="1"
-                    android:baselineAligned="false"
-                    android:orientation="horizontal">
-
-                    <RelativeLayout
-                        android:layout_width="0dip"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1">
-
-                        <include
-                            android:id="@+id/landmark_imageitem_7"
-                            layout="@layout/image_item"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                        android:layout_width="0dip"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="bottom"
-                        android:layout_weight="1">
-
-                        <include
-                            layout="@layout/edit_item"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerHorizontal="true"
-                            android:visibility="invisible" />
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                        android:layout_width="0dip"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="bottom"
-                        android:layout_weight="1"
-                        android:visibility="visible">
-
-                        <include
-                            layout="@layout/edit_item"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            android:visibility="gone" />
-                    </RelativeLayout>
-                </LinearLayout>
-
             </LinearLayout>
+
+            <TextView
+                android:id="@+id/noImageText"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="@string/no_image_loaded_yet"
+                android:textAlignment="center"
+                android:visibility="visible"
+                android:gravity="center"/>
+
+            <ImageView
+                android:id="@+id/endingBar"
+                android:layout_width="match_parent"
+                android:layout_height="1dip"
+                android:layout_marginTop="10dip"
+                android:layout_marginBottom="10dip"
+                android:background="#D0D0D0"
+                android:contentDescription="@string/todo" />
+
         </LinearLayout>
     </ScrollView>
 
@@ -346,7 +102,7 @@
         android:background="#66000000"
         android:clickable="true"
         android:focusable="true"
-        android:visibility="gone" >
+        android:visibility="gone">
 
         <ListView
             android:id="@+id/landmark_list"
@@ -357,8 +113,7 @@
             android:background="#ffffffff"
             android:cacheColorHint="#00000000"
             android:divider="#aa000000"
-            android:dividerHeight="1px" >
-        </ListView>
+            android:dividerHeight="1px" />
     </RelativeLayout>
 
     <include

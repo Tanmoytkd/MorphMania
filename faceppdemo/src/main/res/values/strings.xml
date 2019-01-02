@@ -51,6 +51,7 @@
     <string name="take_pictures">TAKE PICTURES</string>
     <string name="todo">TODO</string>
     <string name="tkd_rocks">TKD ROCKS…</string>
+    <string name="no_image_loaded_yet">No Image Loaded Yet</string>
 
 
 </resources>

@@ -52,17 +52,17 @@ public class MainActivity extends Activity implements OnClickListener {
 
 
     private boolean isStartRecorder, is3DPose, isDebug, isROIDetect, is106Points, isBackCamera, isFaceProperty,
-            isOneFaceTrackig, isFaceCompare;
-    private int[] imageItemImages_gray = {R.drawable.record_gray, R.drawable.three_d_gray, R.drawable.debug_gray,
-            R.drawable.area_gray, R.drawable.point81, R.drawable.frontphone, R.drawable.faceproperty_gray, R.drawable.facecompare_gray};
-    private int[] imageItemImages_blue = {R.drawable.record_blue, R.drawable.three_d_blue, R.drawable.debug_blue,
-            R.drawable.area_blue, R.drawable.point106, R.drawable.backphone, R.drawable.faceproperty_blue, R.drawable.facecompare_blue};
-    private int[] imageItemTexts = {R.string.record, R.string.pose_3d, R.string.debug, R.string.roi, R.string.landmarks, R.string.front, R.string.attributes, R.string.face_compare};
-    private int[] editItemStrs = {R.string.min_face, R.string.resolution, R.string.interval, R.string.one_face_trackig, R.string.trackig_mode};
+            isOneFaceTrackig = true, isFaceCompare;
+//    private int[] imageItemImages_gray = {R.drawable.record_gray, R.drawable.three_d_gray, R.drawable.debug_gray,
+//            R.drawable.area_gray, R.drawable.point81, R.drawable.frontphone, R.drawable.faceproperty_gray, R.drawable.facecompare_gray};
+//    private int[] imageItemImages_blue = {R.drawable.record_blue, R.drawable.three_d_blue, R.drawable.debug_blue,
+//            R.drawable.area_blue, R.drawable.point106, R.drawable.backphone, R.drawable.faceproperty_blue, R.drawable.facecompare_blue};
+//    private int[] imageItemTexts = {R.string.record, R.string.pose_3d, R.string.debug, R.string.roi, R.string.landmarks, R.string.front, R.string.attributes, R.string.face_compare};
+//    private int[] editItemStrs = {R.string.min_face, R.string.resolution, R.string.interval, R.string.one_face_trackig, R.string.trackig_mode};
 
-    private RelativeLayout[] imageItem_Rels;
-    private RelativeLayout[] textItem_Rels;
-    private TextView[] editItemTexts;
+    //    private RelativeLayout[] imageItem_Rels;
+//    private RelativeLayout[] textItem_Rels;
+//    private TextView[] editItemTexts;
     private String[] editValues = {min_face_size + "", resolution, detection_interval + "", "YES", "Fast"};
 
     @Override
@@ -98,14 +98,23 @@ public class MainActivity extends Activity implements OnClickListener {
 
     private void init() {
         mDialogUtil = new DialogUtil(this);
+
+        //set title
         TextView title = findViewById(R.id.title_layout_titleText);
         title.setText(getResources().getString(R.string.title));
+
+        //vanish the back button
         findViewById(R.id.title_layout_returnRel).setVisibility(View.GONE);
+
+        //configure take picture button
         Button enterBtn = findViewById(R.id.landmark_enterBtn);
         enterBtn.setText(getResources().getString(R.string.detect_face));
         enterBtn.setOnClickListener(this);
+
+
         mInflater = LayoutInflater.from(this);
         findViewById(R.id.activity_rootRel).setOnClickListener(this);
+
         mListRel = findViewById(R.id.landmark_listRel);
         mListRel.setOnClickListener(this);
         mListView = findViewById(R.id.landmark_list);
@@ -113,71 +122,73 @@ public class MainActivity extends Activity implements OnClickListener {
 
         mListAdapter = new ListAdapter();
         mListView.setAdapter(mListAdapter);
-        RelativeLayout rel0 = findViewById(R.id.landmark_imageitem_0);
-        RelativeLayout rel1 = findViewById(R.id.landmark_imageitem_1);
-        RelativeLayout rel2 = findViewById(R.id.landmark_imageitem_2);
-        RelativeLayout rel3 = findViewById(R.id.landmark_imageitem_3);
-        RelativeLayout rel4 = findViewById(R.id.landmark_imageitem_4);
-        RelativeLayout rel5 = findViewById(R.id.landmark_imageitem_5);
-        RelativeLayout rel6 = findViewById(R.id.landmark_imageitem_6);
-        RelativeLayout rel7 = findViewById(R.id.landmark_imageitem_7);
-        imageItem_Rels = new RelativeLayout[]{rel0, rel1, rel2, rel3, rel4, rel5, rel6, rel7};
-        RelativeLayout textRel0 = findViewById(R.id.landmark_edititem_0);
-        RelativeLayout textRel1 = findViewById(R.id.landmark_edititem_1);
-        RelativeLayout textRel2 = findViewById(R.id.landmark_edititem_2);
-        RelativeLayout textRel3 = findViewById(R.id.landmark_edititem_3);
-        RelativeLayout textRel4 = findViewById(R.id.landmark_edititem_4);
-        textItem_Rels = new RelativeLayout[]{textRel0, textRel1, textRel2, textRel3, textRel4};
+
+
+//        RelativeLayout rel0 = findViewById(R.id.landmark_imageitem_0);
+//        RelativeLayout rel1 = findViewById(R.id.landmark_imageitem_1);
+//        RelativeLayout rel2 = findViewById(R.id.landmark_imageitem_2);
+//        RelativeLayout rel3 = findViewById(R.id.landmark_imageitem_3);
+//        RelativeLayout rel4 = findViewById(R.id.landmark_imageitem_4);
+//        RelativeLayout rel5 = findViewById(R.id.landmark_imageitem_5);
+//        RelativeLayout rel6 = findViewById(R.id.landmark_imageitem_6);
+//        RelativeLayout rel7 = findViewById(R.id.landmark_imageitem_7);
+//        imageItem_Rels = new RelativeLayout[]{rel0, rel1, rel2, rel3, rel4, rel5, rel6, rel7};
+//        RelativeLayout textRel0 = findViewById(R.id.landmark_edititem_0);
+//        RelativeLayout textRel1 = findViewById(R.id.landmark_edititem_1);
+//        RelativeLayout textRel2 = findViewById(R.id.landmark_edititem_2);
+//        RelativeLayout textRel3 = findViewById(R.id.landmark_edititem_3);
+//        RelativeLayout textRel4 = findViewById(R.id.landmark_edititem_4);
+//        textItem_Rels = new RelativeLayout[]{textRel0, textRel1, textRel2, textRel3, textRel4};
     }
 
     private void initData() {
-        for (int i = 0; i < imageItem_Rels.length; i++) {
-            imageItem_Rels[i].setOnClickListener(this);
-            ImageView image = imageItem_Rels[i].findViewById(R.id.image_item_image);
-            image.setImageResource(imageItemImages_gray[i]);
-            TextView text = imageItem_Rels[i].findViewById(R.id.image_item_text);
-            text.setText(getResources().getString(imageItemTexts[i]));
-            text.setTextColor(0XFFD0D0D0);
-            if (i == 5) {
-                text.setTextColor(0XFF30364C);
-                text.setText(getResources().getString(R.string.front));
-            } else if (i == 4) {
-                text.setTextColor(0XFF30364C);
-                text.setText(getResources().getString(R.string.landmarks));
-            }
-        }
+//        for (int i = 0; i < imageItem_Rels.length; i++) {
+//            imageItem_Rels[i].setOnClickListener(this);
+//            ImageView image = imageItem_Rels[i].findViewById(R.id.image_item_image);
+//            image.setImageResource(imageItemImages_gray[i]);
+//            TextView text = imageItem_Rels[i].findViewById(R.id.image_item_text);
+//            text.setText(getResources().getString(imageItemTexts[i]));
+//            text.setTextColor(0XFFD0D0D0);
+//            if (i == 5) {
+//                text.setTextColor(0XFF30364C);
+//                text.setText(getResources().getString(R.string.front));
+//            } else if (i == 4) {
+//                text.setTextColor(0XFF30364C);
+//                text.setText(getResources().getString(R.string.landmarks));
+//            }
+//        }
 
-        editItemTexts = new TextView[5];
-        for (int i = 0; i < textItem_Rels.length; i++) {
-            textItem_Rels[i].setOnClickListener(this);
-            TextView text = textItem_Rels[i].findViewById(R.id.edit_item_text);
-            text.setText(getResources().getString(editItemStrs[i]));
-            editItemTexts[i] = textItem_Rels[i].findViewById(R.id.edit_item_edit);
-            editItemTexts[i].setText(editValues[i]);
-            DialogUtil.setTextSzie(editItemTexts[i], editValues[i].length());
-        }
+//        editItemTexts = new TextView[5];
+//        for (int i = 0; i < textItem_Rels.length; i++) {
+//            textItem_Rels[i].setOnClickListener(this);
+//            TextView text = textItem_Rels[i].findViewById(R.id.edit_item_text);
+//            text.setText(getResources().getString(editItemStrs[i]));
+//            editItemTexts[i] = textItem_Rels[i].findViewById(R.id.edit_item_edit);
+//            editItemTexts[i].setText(editValues[i]);
+//            DialogUtil.setTextSzie(editItemTexts[i], editValues[i].length());
+//        }
 
-        editItemTexts[1].setFocusable(false);
-        editItemTexts[1].setClickable(false);
+//        editItemTexts[1].setFocusable(false);
+//        editItemTexts[1].setClickable(false);
         // editItemedits[1].setTextSize(18);
     }
 
     private void onclickImageItem(int index, boolean isSelect) {
-        ImageView image = imageItem_Rels[index].findViewById(R.id.image_item_image);
-        TextView text = imageItem_Rels[index].findViewById(R.id.image_item_text);
-        if (isSelect) {
-            text.setTextColor(0XFF30364C);
-            image.setImageResource(imageItemImages_blue[index]);
-            if (index == 5)
-                text.setText(getResources().getString(R.string.back));
-        } else {
-            if (index != 5 && index != 4)
-                text.setTextColor(0XFFD0D0D0);
-
-            image.setImageResource(imageItemImages_gray[index]);
-            if (index == 5)
-                text.setText(getResources().getString(R.string.front));
-        }
+//        ImageView image = imageItem_Rels[index].findViewById(R.id.image_item_image);
+//        TextView text = imageItem_Rels[index].findViewById(R.id.image_item_text);
+//        if (isSelect) {
+//            text.setTextColor(0XFF30364C);
+//            image.setImageResource(imageItemImages_blue[index]);
+//            if (index == 5)
+//                text.setText(getResources().getString(R.string.back));
+//        } else {
+//            if (index != 5 && index != 4)
+//                text.setTextColor(0XFFD0D0D0);
+//
+//            image.setImageResource(imageItemImages_gray[index]);
+//            if (index == 5)
+//                text.setText(getResources().getString(R.string.front));
+//        }
     }
 
     private void requestCameraPerm() {
@@ -185,7 +196,7 @@ public class MainActivity extends Activity implements OnClickListener {
             if (ContextCompat.checkSelfPermission(this,
                     Manifest.permission.CAMERA)
                     != PackageManager.PERMISSION_GRANTED) {
-                //进行权限请求
+
                 ActivityCompat.requestPermissions(this,
                         new String[]{Manifest.permission.CAMERA},
                         EXTERNAL_STORAGE_REQ_CAMERA_CODE);
@@ -212,9 +223,9 @@ public class MainActivity extends Activity implements OnClickListener {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode==101){
-            String error=data.getStringExtra("errorcode");
-            ConUtil.showToast(this, "sdk init error, code: "+error);
+        if (resultCode == 101) {
+            String error = data.getStringExtra("errorcode");
+            ConUtil.showToast(this, "sdk init error, code: " + error);
         }
         getCameraSizeList();
 
@@ -232,9 +243,9 @@ public class MainActivity extends Activity implements OnClickListener {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        RelativeLayout.LayoutParams rlp= (RelativeLayout.LayoutParams) mListView.getLayoutParams();
-                        rlp.width= ConUtil.dip2px(MainActivity.this,200);
-                        rlp.height=ConUtil.dip2px(MainActivity.this,55)*cameraSize.size();
+                        RelativeLayout.LayoutParams rlp = (RelativeLayout.LayoutParams) mListView.getLayoutParams();
+                        rlp.width = ConUtil.dip2px(MainActivity.this, 200);
+                        rlp.height = ConUtil.dip2px(MainActivity.this, 55) * cameraSize.size();
                         mListView.setLayoutParams(rlp);
                         mListAdapter.notifyDataSetChanged();
                     }
@@ -249,7 +260,6 @@ public class MainActivity extends Activity implements OnClickListener {
             mListRel.setVisibility(View.GONE);
         else
             mListRel.setVisibility(View.VISIBLE);
-
     }
 
     @Override
@@ -265,34 +275,34 @@ public class MainActivity extends Activity implements OnClickListener {
     @Override
     public void onClick(View v) {
         int ID = v.getId();
-        if (ID == R.id.title_layout_returnRel) {
-            finish();
-        } else if (ID == R.id.landmark_edititem_0) {
-            mDialogUtil.showEditText(editItemTexts[0], 0);
-        } else if (ID == R.id.landmark_edititem_1) {//分辨率
-            ConUtil.isGoneKeyBoard(MainActivity.this);
-            if (mListAdapter.getCount()==0){
-                Toast.makeText(MainActivity.this,"请获取相机权限后重试",Toast.LENGTH_SHORT).show();
-            }else{
-                isShowListView();
-            }
-        } else if (ID == R.id.landmark_edititem_2) {
-            mDialogUtil.showEditText(editItemTexts[2], 1);
-        } else if (ID == R.id.landmark_edititem_3) {
-            isOneFaceTrackig = !isOneFaceTrackig;
-            if (isOneFaceTrackig)
-                editItemTexts[3].setText(getResources().getString(R.string.one_face_trackig_true));
-            else
-                editItemTexts[3].setText(getResources().getString(R.string.one_face_trackig_false));
-        } else if (ID == R.id.landmark_edititem_4) {
-            mDialogUtil.showTrackModel(editItemTexts[4]);
-        } else if (ID == R.id.landmark_listRel) {
-            isShowListView();
-        } else if (ID == R.id.activity_rootRel) {
-            ConUtil.isGoneKeyBoard(MainActivity.this);
-        } else if (ID == R.id.landmark_imageitem_0) {
-
-            Toast.makeText(MainActivity.this,"开发中",Toast.LENGTH_SHORT).show();
+//        if (ID == R.id.title_layout_returnRel) {
+//            finish();
+//        } else if (ID == R.id.landmark_edititem_0) {
+//            mDialogUtil.showEditText(editItemTexts[0], 0);
+//        } else if (ID == R.id.landmark_edititem_1) {//分辨率
+//            ConUtil.isGoneKeyBoard(MainActivity.this);
+//            if (mListAdapter.getCount() == 0) {
+//                Toast.makeText(MainActivity.this, "Please obtain permission to retry the camera", Toast.LENGTH_SHORT).show();
+//            } else {
+//                isShowListView();
+//            }
+//        } else if (ID == R.id.landmark_edititem_2) {
+//            mDialogUtil.showEditText(editItemTexts[2], 1);
+//        } else if (ID == R.id.landmark_edititem_3) {
+//            isOneFaceTrackig = !isOneFaceTrackig;
+//            if (isOneFaceTrackig)
+//                editItemTexts[3].setText(getResources().getString(R.string.one_face_trackig_true));
+//            else
+//                editItemTexts[3].setText(getResources().getString(R.string.one_face_trackig_false));
+//        } else if (ID == R.id.landmark_edititem_4) {
+//            mDialogUtil.showTrackModel(editItemTexts[4]);
+//        } else if (ID == R.id.landmark_listRel) {
+//            isShowListView();
+//        } else if (ID == R.id.activity_rootRel) {
+//            ConUtil.isGoneKeyBoard(MainActivity.this);
+//        } else if (ID == R.id.landmark_imageitem_0) {
+//
+//            Toast.makeText(MainActivity.this, "开发中", Toast.LENGTH_SHORT).show();
 
 //
 //            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
@@ -301,58 +311,61 @@ public class MainActivity extends Activity implements OnClickListener {
 //                Toast.makeText(MainActivity.this,"不支持4.3以下录制",Toast.LENGTH_SHORT).show();
 //            }
 
-        } else if (ID == R.id.landmark_imageitem_1) {
-            is3DPose = !is3DPose;
-            onclickImageItem(1, is3DPose);
-        } else if (ID == R.id.landmark_imageitem_2) {
-            isDebug = !isDebug;
-            onclickImageItem(2, isDebug);
-            if (isDebug){
-                isFaceCompare=false;
-                onclickImageItem(7, isFaceCompare);
-            }else{
-                isFaceProperty=false;
-                onclickImageItem(6, isFaceProperty);
-            }
-        } else if (ID == R.id.landmark_imageitem_3) {
-            isROIDetect = !isROIDetect;
-            onclickImageItem(3, isROIDetect);
-        } else if (ID == R.id.landmark_imageitem_4) {
-            is106Points = !is106Points;
-            onclickImageItem(4, is106Points);
-        } else if (ID == R.id.landmark_imageitem_5) {
-            isBackCamera = !isBackCamera;
-            onclickImageItem(5, isBackCamera);
-            getCameraSizeList();
-        } else if (ID == R.id.landmark_imageitem_6) {
-            if (!Facepp.getAbility(ConUtil.getFileContent(this, R
-                    .raw.megviifacepp_0_5_2_model)).contains(Facepp.Ability.AGEGENDER)) {
-                ConUtil.showToast(this, getResources().getString(R.string.detector));
-                return;
-            }
+//        } else if (ID == R.id.landmark_imageitem_1) {
+//            is3DPose = !is3DPose;
+//            onclickImageItem(1, is3DPose);
+//        } else if (ID == R.id.landmark_imageitem_2) {
+//            isDebug = !isDebug;
+//            onclickImageItem(2, isDebug);
+//            if (isDebug) {
+//                isFaceCompare = false;
+//                onclickImageItem(7, isFaceCompare);
+//            } else {
+//                isFaceProperty = false;
+//                onclickImageItem(6, isFaceProperty);
+//            }
+//        } else if (ID == R.id.landmark_imageitem_3) {
+//            isROIDetect = !isROIDetect;
+//            onclickImageItem(3, isROIDetect);
+//        } else if (ID == R.id.landmark_imageitem_4) {
+//            is106Points = !is106Points;
+//            onclickImageItem(4, is106Points);
+//        } else if (ID == R.id.landmark_imageitem_5) {
+//            isBackCamera = !isBackCamera;
+//            onclickImageItem(5, isBackCamera);
+//            getCameraSizeList();
+//        } else if (ID == R.id.landmark_imageitem_6) {
+//            if (!Facepp.getAbility(ConUtil.getFileContent(this, R
+//                    .raw.megviifacepp_0_5_2_model)).contains(Facepp.Ability.AGEGENDER)) {
+//                ConUtil.showToast(this, getResources().getString(R.string.detector));
+//                return;
+//            }
 
-            isFaceProperty = !isFaceProperty;
-            onclickImageItem(6, isFaceProperty);
-            if (isFaceProperty){
-                isFaceCompare=false;
-                onclickImageItem(7,isFaceCompare);
-                isDebug=true;
-                onclickImageItem(2, isDebug);
-            }
-        } else if (ID == R.id.landmark_imageitem_7) {
-            isFaceCompare = !isFaceCompare;
-            if (isFaceCompare) {
-                isFaceProperty = false;
-                onclickImageItem(6, isFaceProperty);
-
-                isDebug = false;
-                onclickImageItem(2, isDebug);
-            }
-            onclickImageItem(7, isFaceCompare);
-        } else if (ID == R.id.landmark_enterBtn) {
-            min_face_size = (int) Long.parseLong(editItemTexts[0].getText().toString());
-            detection_interval = (int) Long.parseLong(editItemTexts[2].getText().toString());
-            Log.w("ceshi", "min_face_size===" + min_face_size + ", " + detection_interval);
+//            isFaceProperty = !isFaceProperty;
+//            onclickImageItem(6, isFaceProperty);
+//            if (isFaceProperty) {
+//                isFaceCompare = false;
+//                onclickImageItem(7, isFaceCompare);
+//                isDebug = true;
+//                onclickImageItem(2, isDebug);
+//            }
+//        } else if (ID == R.id.landmark_imageitem_7) {
+//            isFaceCompare = !isFaceCompare;
+//            if (isFaceCompare) {
+//                isFaceProperty = false;
+//                onclickImageItem(6, isFaceProperty);
+//
+//                isDebug = false;
+//                onclickImageItem(2, isDebug);
+//            }
+//            onclickImageItem(7, isFaceCompare);
+//        } else
+//
+//
+        if (ID == R.id.landmark_enterBtn) {
+//            min_face_size = (int) Long.parseLong(editItemTexts[0].getText().toString());
+//            detection_interval = (int) Long.parseLong(editItemTexts[2].getText().toString());
+//            Log.w("ceshi", "min_face_size===" + min_face_size + ", " + detection_interval);
 
             if (isStartRecorder)
                 if (resolutionMap != null) {
@@ -390,10 +403,10 @@ public class MainActivity extends Activity implements OnClickListener {
             faceActionInfo.resolutionMap = resolutionMap;
             faceActionInfo.isFaceProperty = isFaceProperty;
             faceActionInfo.isOneFaceTrackig = isOneFaceTrackig;
-            faceActionInfo.trackModel = editItemTexts[4].getText().toString().trim();
+            faceActionInfo.trackModel = editValues[4]; //editItemTexts[4].getText().toString().trim();
             faceActionInfo.isFaceCompare = isFaceCompare;
 
-            startActivityForResult(new Intent(MainActivity.this, OpenglActivity.class).putExtra("FaceAction", faceActionInfo),101);
+            startActivityForResult(new Intent(MainActivity.this, OpenglActivity.class).putExtra("FaceAction", faceActionInfo), 101);
         }
     }
 
@@ -482,8 +495,8 @@ public class MainActivity extends Activity implements OnClickListener {
                 isShowListView();
                 resolutionMap = cameraSize.get(position);
                 String str = resolutionMap.get("width") + "*" + resolutionMap.get("height");
-                DialogUtil.setTextSzie(editItemTexts[1], str.length());
-                editItemTexts[1].setText(str);
+//                DialogUtil.setTextSzie(editItemTexts[1], str.length());
+//                editItemTexts[1].setText(str);
             }
         });
     }
