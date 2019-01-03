@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -19,20 +20,19 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.facepp.demo.bean.FaceActionInfo;
 import com.facepp.demo.util.ConUtil;
 import com.facepp.demo.util.DialogUtil;
 import com.facepp.demo.util.ICamera;
-import com.megvii.facepp.sdk.Facepp;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Locale;
 
 import static android.os.Build.VERSION_CODES.M;
 
@@ -64,6 +64,9 @@ public class MainActivity extends Activity implements OnClickListener {
 //    private RelativeLayout[] textItem_Rels;
 //    private TextView[] editItemTexts;
     private String[] editValues = {min_face_size + "", resolution, detection_interval + "", "YES", "Fast"};
+
+    LinearLayout cameraSide;
+    LinearLayout generateButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,6 +101,8 @@ public class MainActivity extends Activity implements OnClickListener {
 
     private void init() {
         mDialogUtil = new DialogUtil(this);
+
+        cameraSide = findViewById(R.id.cameraSide);
 
         //set title
         TextView title = findViewById(R.id.title_layout_titleText);
@@ -142,6 +147,24 @@ public class MainActivity extends Activity implements OnClickListener {
     }
 
     private void initData() {
+        //setup cameraSideButton
+        cameraSide.setOnClickListener(this);
+        TextView cameraSideText = cameraSide.findViewById(R.id.cameraSideText);
+        ImageView cameraSideImg = cameraSide.findViewById(R.id.cameraSidePic);
+        if (isBackCamera) {
+            cameraSideImg.setImageDrawable(getResources().getDrawable(R.drawable.backphone));
+            cameraSideText.setText(R.string.back_camera);
+        } else {
+            cameraSideImg.setImageDrawable(getResources().getDrawable(R.drawable.frontphone));
+            cameraSideText.setText(R.string.front_camera);
+        }
+
+//        //setup generate button
+        ImageView generateButtonLogo = findViewById(R.id.morph_mania_logo);
+        Glide.with(MainActivity.this).load(R.drawable.ic_face).into(generateButtonLogo);
+        generateButton = findViewById(R.id.landmark_logo);
+        generateButton.setOnClickListener(this);
+
 //        for (int i = 0; i < imageItem_Rels.length; i++) {
 //            imageItem_Rels[i].setOnClickListener(this);
 //            ImageView image = imageItem_Rels[i].findViewById(R.id.image_item_image);
@@ -275,6 +298,18 @@ public class MainActivity extends Activity implements OnClickListener {
     @Override
     public void onClick(View v) {
         int ID = v.getId();
+        if (ID == R.id.cameraSide) {
+            isBackCamera = !isBackCamera;
+            TextView t = v.findViewById(R.id.cameraSideText);
+            ImageView img = v.findViewById(R.id.cameraSidePic);
+            if (isBackCamera) {
+                img.setImageDrawable(getResources().getDrawable(R.drawable.backphone));
+                t.setText(R.string.back_camera);
+            } else {
+                img.setImageDrawable(getResources().getDrawable(R.drawable.frontphone));
+                t.setText(R.string.front_camera);
+            }
+        }
 //        if (ID == R.id.title_layout_returnRel) {
 //            finish();
 //        } else if (ID == R.id.landmark_edititem_0) {

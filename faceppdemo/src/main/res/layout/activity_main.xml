@@ -1,4 +1,5 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/activity_rootRel"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -12,16 +13,81 @@
         android:layout_height="wrap_content"
         layout="@layout/title_layout" />
 
-    <com.facepp.demo.util.AutoRatioImageview
+    <!--<com.facepp.demo.util.AutoRatioImageview-->
+        <!--android:id="@+id/landmark_logo"-->
+        <!--android:layout_width="100dip"-->
+        <!--android:layout_height="0dp"-->
+        <!--android:adjustViewBounds="true"-->
+        <!--android:layout_below="@+id/landmark_title"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:layout_marginTop="5dip"-->
+        <!--android:scaleType="centerCrop"-->
+        <!--android:src="@drawable/facepplogo" />-->
+
+    <LinearLayout
         android:id="@+id/landmark_logo"
         android:layout_width="100dip"
-        android:layout_height="0dp"
-        android:adjustViewBounds="true"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/landmark_title"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="5dip"
         android:scaleType="centerCrop"
-        android:src="@drawable/facepplogo" />
+        android:padding="5dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:background="@drawable/customborder">
+
+        <ImageView
+            android:id="@+id/morph_mania_logo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:contentDescription="@string/todo"
+            app:srcCompat="@drawable/ic_face" />
+
+        <TextView
+            android:id="@+id/generate_button_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-smallcaps"
+            android:gravity="center"
+            android:text="@string/generate_button_text"
+            android:textColor="#3f3f3f" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/cameraSide"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignTop="@+id/landmark_logo"
+        android:layout_alignBottom="@+id/landmark_logo"
+        android:layout_marginEnd="22dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginBottom="0dp"
+        android:layout_toStartOf="@+id/landmark_logo"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:background="@drawable/customborder">
+
+        <ImageView
+            android:id="@+id/cameraSidePic"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/todo"
+            app:srcCompat="@drawable/frontphone" />
+
+        <TextView
+            android:id="@+id/cameraSideText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:gravity="center"
+            android:textColor="#3f3f3f"
+            android:text="@string/front_camera" />
+
+    </LinearLayout>
 
     <Button
         android:id="@+id/landmark_enterBtn"

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Face++ Demo</string>
+    <string name="app_name">Morph Mania</string>
 
     <string name="record">Record</string>
     <string name="pose_3d">3D Pose</string>
@@ -52,6 +52,9 @@
     <string name="todo">TODO</string>
     <string name="tkd_rocks">TKD ROCKS…</string>
     <string name="no_image_loaded_yet">No Image Loaded Yet</string>
+    <string name="front_camera">Front Camera</string>
+    <string name="generate_button_text">Generate</string>
+    <string name="back_camera">Back Camera</string>
 
 
 </resources>
