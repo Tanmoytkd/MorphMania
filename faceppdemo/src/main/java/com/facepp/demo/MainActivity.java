@@ -53,16 +53,7 @@ public class MainActivity extends Activity implements OnClickListener {
 
     private boolean isStartRecorder, is3DPose, isDebug, isROIDetect, is106Points, isBackCamera, isFaceProperty,
             isOneFaceTrackig = true, isFaceCompare;
-//    private int[] imageItemImages_gray = {R.drawable.record_gray, R.drawable.three_d_gray, R.drawable.debug_gray,
-//            R.drawable.area_gray, R.drawable.point81, R.drawable.frontphone, R.drawable.faceproperty_gray, R.drawable.facecompare_gray};
-//    private int[] imageItemImages_blue = {R.drawable.record_blue, R.drawable.three_d_blue, R.drawable.debug_blue,
-//            R.drawable.area_blue, R.drawable.point106, R.drawable.backphone, R.drawable.faceproperty_blue, R.drawable.facecompare_blue};
-//    private int[] imageItemTexts = {R.string.record, R.string.pose_3d, R.string.debug, R.string.roi, R.string.landmarks, R.string.front, R.string.attributes, R.string.face_compare};
-//    private int[] editItemStrs = {R.string.min_face, R.string.resolution, R.string.interval, R.string.one_face_trackig, R.string.trackig_mode};
 
-    //    private RelativeLayout[] imageItem_Rels;
-//    private RelativeLayout[] textItem_Rels;
-//    private TextView[] editItemTexts;
     private String[] editValues = {min_face_size + "", resolution, detection_interval + "", "YES", "Fast"};
 
     LinearLayout cameraSide;
@@ -77,26 +68,6 @@ public class MainActivity extends Activity implements OnClickListener {
         initData();
         onClickListener();
         requestCameraPerm();
-//        mListView.postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//                requestCameraPerm();
-//            }
-//        }, 500);
-
-//        String jsonInfo = String.format(Locale.US, "{" + "\"minFaceSize\":%d,"
-//                        + "\"rotation\":%d,"
-//                        + "\"interval\":%d,"
-//                        + "\"detectionMode\":%d,"
-//                        + "\"roi_left\":%d,"
-//                        + "\"roi_top\":%d,"
-//                        + "\"roi_right\":%d,"
-//                        + "\"roi_bottom\":%d,"
-//                        + "\"one_face_tracking\":%d"
-//                        + "}", 100, 270, 100,
-//                1, 0, 0,
-//                1920, 1080, 1);
-//        Log.d("ceshi", "onCreate:" + jsonInfo);
     }
 
     private void init() {
@@ -127,23 +98,6 @@ public class MainActivity extends Activity implements OnClickListener {
 
         mListAdapter = new ListAdapter();
         mListView.setAdapter(mListAdapter);
-
-
-//        RelativeLayout rel0 = findViewById(R.id.landmark_imageitem_0);
-//        RelativeLayout rel1 = findViewById(R.id.landmark_imageitem_1);
-//        RelativeLayout rel2 = findViewById(R.id.landmark_imageitem_2);
-//        RelativeLayout rel3 = findViewById(R.id.landmark_imageitem_3);
-//        RelativeLayout rel4 = findViewById(R.id.landmark_imageitem_4);
-//        RelativeLayout rel5 = findViewById(R.id.landmark_imageitem_5);
-//        RelativeLayout rel6 = findViewById(R.id.landmark_imageitem_6);
-//        RelativeLayout rel7 = findViewById(R.id.landmark_imageitem_7);
-//        imageItem_Rels = new RelativeLayout[]{rel0, rel1, rel2, rel3, rel4, rel5, rel6, rel7};
-//        RelativeLayout textRel0 = findViewById(R.id.landmark_edititem_0);
-//        RelativeLayout textRel1 = findViewById(R.id.landmark_edititem_1);
-//        RelativeLayout textRel2 = findViewById(R.id.landmark_edititem_2);
-//        RelativeLayout textRel3 = findViewById(R.id.landmark_edititem_3);
-//        RelativeLayout textRel4 = findViewById(R.id.landmark_edititem_4);
-//        textItem_Rels = new RelativeLayout[]{textRel0, textRel1, textRel2, textRel3, textRel4};
     }
 
     private void initData() {
@@ -159,59 +113,14 @@ public class MainActivity extends Activity implements OnClickListener {
             cameraSideText.setText(R.string.front_camera);
         }
 
-//        //setup generate button
+        //setup generate button
         ImageView generateButtonLogo = findViewById(R.id.morph_mania_logo);
         Glide.with(MainActivity.this).load(R.drawable.ic_face).into(generateButtonLogo);
         generateButton = findViewById(R.id.landmark_logo);
         generateButton.setOnClickListener(this);
-
-//        for (int i = 0; i < imageItem_Rels.length; i++) {
-//            imageItem_Rels[i].setOnClickListener(this);
-//            ImageView image = imageItem_Rels[i].findViewById(R.id.image_item_image);
-//            image.setImageResource(imageItemImages_gray[i]);
-//            TextView text = imageItem_Rels[i].findViewById(R.id.image_item_text);
-//            text.setText(getResources().getString(imageItemTexts[i]));
-//            text.setTextColor(0XFFD0D0D0);
-//            if (i == 5) {
-//                text.setTextColor(0XFF30364C);
-//                text.setText(getResources().getString(R.string.front));
-//            } else if (i == 4) {
-//                text.setTextColor(0XFF30364C);
-//                text.setText(getResources().getString(R.string.landmarks));
-//            }
-//        }
-
-//        editItemTexts = new TextView[5];
-//        for (int i = 0; i < textItem_Rels.length; i++) {
-//            textItem_Rels[i].setOnClickListener(this);
-//            TextView text = textItem_Rels[i].findViewById(R.id.edit_item_text);
-//            text.setText(getResources().getString(editItemStrs[i]));
-//            editItemTexts[i] = textItem_Rels[i].findViewById(R.id.edit_item_edit);
-//            editItemTexts[i].setText(editValues[i]);
-//            DialogUtil.setTextSzie(editItemTexts[i], editValues[i].length());
-//        }
-
-//        editItemTexts[1].setFocusable(false);
-//        editItemTexts[1].setClickable(false);
-        // editItemedits[1].setTextSize(18);
     }
 
     private void onclickImageItem(int index, boolean isSelect) {
-//        ImageView image = imageItem_Rels[index].findViewById(R.id.image_item_image);
-//        TextView text = imageItem_Rels[index].findViewById(R.id.image_item_text);
-//        if (isSelect) {
-//            text.setTextColor(0XFF30364C);
-//            image.setImageResource(imageItemImages_blue[index]);
-//            if (index == 5)
-//                text.setText(getResources().getString(R.string.back));
-//        } else {
-//            if (index != 5 && index != 4)
-//                text.setTextColor(0XFFD0D0D0);
-//
-//            image.setImageResource(imageItemImages_gray[index]);
-//            if (index == 5)
-//                text.setText(getResources().getString(R.string.front));
-//        }
     }
 
     private void requestCameraPerm() {
@@ -242,7 +151,7 @@ public class MainActivity extends Activity implements OnClickListener {
             startRecord();
     }
 
-    //oppo vivo 第二次权限进入适配
+    //oppo vivo Second permission to access the adapter
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -251,8 +160,6 @@ public class MainActivity extends Activity implements OnClickListener {
             ConUtil.showToast(this, "sdk init error, code: " + error);
         }
         getCameraSizeList();
-
-
     }
 
     private void getCameraSizeList() {
@@ -310,98 +217,8 @@ public class MainActivity extends Activity implements OnClickListener {
                 t.setText(R.string.front_camera);
             }
         }
-//        if (ID == R.id.title_layout_returnRel) {
-//            finish();
-//        } else if (ID == R.id.landmark_edititem_0) {
-//            mDialogUtil.showEditText(editItemTexts[0], 0);
-//        } else if (ID == R.id.landmark_edititem_1) {//分辨率
-//            ConUtil.isGoneKeyBoard(MainActivity.this);
-//            if (mListAdapter.getCount() == 0) {
-//                Toast.makeText(MainActivity.this, "Please obtain permission to retry the camera", Toast.LENGTH_SHORT).show();
-//            } else {
-//                isShowListView();
-//            }
-//        } else if (ID == R.id.landmark_edititem_2) {
-//            mDialogUtil.showEditText(editItemTexts[2], 1);
-//        } else if (ID == R.id.landmark_edititem_3) {
-//            isOneFaceTrackig = !isOneFaceTrackig;
-//            if (isOneFaceTrackig)
-//                editItemTexts[3].setText(getResources().getString(R.string.one_face_trackig_true));
-//            else
-//                editItemTexts[3].setText(getResources().getString(R.string.one_face_trackig_false));
-//        } else if (ID == R.id.landmark_edititem_4) {
-//            mDialogUtil.showTrackModel(editItemTexts[4]);
-//        } else if (ID == R.id.landmark_listRel) {
-//            isShowListView();
-//        } else if (ID == R.id.activity_rootRel) {
-//            ConUtil.isGoneKeyBoard(MainActivity.this);
-//        } else if (ID == R.id.landmark_imageitem_0) {
-//
-//            Toast.makeText(MainActivity.this, "开发中", Toast.LENGTH_SHORT).show();
 
-//
-//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
-//                startRecordWithPerm();
-//            }else{
-//                Toast.makeText(MainActivity.this,"不支持4.3以下录制",Toast.LENGTH_SHORT).show();
-//            }
-
-//        } else if (ID == R.id.landmark_imageitem_1) {
-//            is3DPose = !is3DPose;
-//            onclickImageItem(1, is3DPose);
-//        } else if (ID == R.id.landmark_imageitem_2) {
-//            isDebug = !isDebug;
-//            onclickImageItem(2, isDebug);
-//            if (isDebug) {
-//                isFaceCompare = false;
-//                onclickImageItem(7, isFaceCompare);
-//            } else {
-//                isFaceProperty = false;
-//                onclickImageItem(6, isFaceProperty);
-//            }
-//        } else if (ID == R.id.landmark_imageitem_3) {
-//            isROIDetect = !isROIDetect;
-//            onclickImageItem(3, isROIDetect);
-//        } else if (ID == R.id.landmark_imageitem_4) {
-//            is106Points = !is106Points;
-//            onclickImageItem(4, is106Points);
-//        } else if (ID == R.id.landmark_imageitem_5) {
-//            isBackCamera = !isBackCamera;
-//            onclickImageItem(5, isBackCamera);
-//            getCameraSizeList();
-//        } else if (ID == R.id.landmark_imageitem_6) {
-//            if (!Facepp.getAbility(ConUtil.getFileContent(this, R
-//                    .raw.megviifacepp_0_5_2_model)).contains(Facepp.Ability.AGEGENDER)) {
-//                ConUtil.showToast(this, getResources().getString(R.string.detector));
-//                return;
-//            }
-
-//            isFaceProperty = !isFaceProperty;
-//            onclickImageItem(6, isFaceProperty);
-//            if (isFaceProperty) {
-//                isFaceCompare = false;
-//                onclickImageItem(7, isFaceCompare);
-//                isDebug = true;
-//                onclickImageItem(2, isDebug);
-//            }
-//        } else if (ID == R.id.landmark_imageitem_7) {
-//            isFaceCompare = !isFaceCompare;
-//            if (isFaceCompare) {
-//                isFaceProperty = false;
-//                onclickImageItem(6, isFaceProperty);
-//
-//                isDebug = false;
-//                onclickImageItem(2, isDebug);
-//            }
-//            onclickImageItem(7, isFaceCompare);
-//        } else
-//
-//
         if (ID == R.id.landmark_enterBtn) {
-//            min_face_size = (int) Long.parseLong(editItemTexts[0].getText().toString());
-//            detection_interval = (int) Long.parseLong(editItemTexts[2].getText().toString());
-//            Log.w("ceshi", "min_face_size===" + min_face_size + ", " + detection_interval);
-
             if (isStartRecorder)
                 if (resolutionMap != null) {
                     int width = resolutionMap.get("width");
@@ -415,16 +232,6 @@ public class MainActivity extends Activity implements OnClickListener {
                             resolutionMap = null;
                     }
                 }
-
-//			startActivity(new Intent(MainActivity.this, OpenglActivity.class)
-//					.putExtra("isStartRecorder", isStartRecorder).putExtra("is3DPose", is3DPose)
-//					.putExtra("isdebug", isDebug).putExtra("ROIDetect", isROIDetect)
-//					.putExtra("is106Points", is106Points).putExtra("isBackCamera", isBackCamera)
-//					.putExtra("faceSize", min_face_size).putExtra("interval", detection_interval)
-//					.putExtra("resolution", resolutionMap).putExtra("isFaceProperty", isFaceProperty)
-//					.putExtra("isOneFaceTrackig", isOneFaceTrackig)
-//					.putExtra("trackModel", editItemTexts[4].getText().toString().trim())
-//					.putExtra("isFaceCompare", isFaceCompare));
 
             FaceActionInfo faceActionInfo = new FaceActionInfo();
             faceActionInfo.isStartRecorder = isStartRecorder;

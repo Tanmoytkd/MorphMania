@@ -83,6 +83,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
+            android:fontFamily="sans-serif-smallcaps"
             android:gravity="center"
             android:textColor="#3f3f3f"
             android:text="@string/front_camera" />

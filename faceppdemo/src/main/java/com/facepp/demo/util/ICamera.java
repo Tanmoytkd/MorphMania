@@ -22,7 +22,7 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * 照相机工具类
+ * Camera Tools
  */
 public class ICamera {
 
@@ -78,7 +78,7 @@ public class ICamera {
 	}
 
 	public boolean isBackCamera(){
-		return cameraId==1?false:true;
+		return (cameraId!=1);
 	}
 
 	// 通过屏幕参数、相机预览尺寸计算布局参数
@@ -131,7 +131,7 @@ public class ICamera {
 
 	public static ArrayList<HashMap<String, Integer>> getCameraPreviewSize(
 			int cameraId) {
-		ArrayList<HashMap<String, Integer>> size = new ArrayList<HashMap<String, Integer>>();
+		ArrayList<HashMap<String, Integer>> size = new ArrayList<>();
 		Camera camera = null;
 		try {
 			camera = Camera.open(cameraId);
@@ -142,7 +142,7 @@ public class ICamera {
 					.getSupportedPreviewSizes();
 			for (Camera.Size tmpSize : allSupportedSize) {
 				if (tmpSize.width > tmpSize.height) {
-					HashMap<String, Integer> map = new HashMap<String, Integer>();
+					HashMap<String, Integer> map = new HashMap<>();
                     map.put("width", tmpSize.width);
                     map.put("height", tmpSize.height);
                     if (tmpSize.width==640&&tmpSize.height==480){
@@ -181,7 +181,7 @@ public class ICamera {
 	private Camera.Size calBestPreviewSize(Camera.Parameters camPara,
 										   final int width, final int height) {
 		List<Camera.Size> allSupportedSize = camPara.getSupportedPreviewSizes();
-		ArrayList<Camera.Size> widthLargerSize = new ArrayList<Camera.Size>();
+		ArrayList<Camera.Size> widthLargerSize = new ArrayList<>();
 		for (Camera.Size tmpSize : allSupportedSize) {
 			Log.w("ceshi", "tmpSize.width===" + tmpSize.width
 					+ ", tmpSize.height===" + tmpSize.height);
@@ -206,7 +206,7 @@ public class ICamera {
 	 * 打开前置或后置摄像头
 	 */
 	public Camera getCameraSafely(int cameraId) {
-		Camera camera = null;
+		Camera camera;
 		try {
 			camera = Camera.open(cameraId);
 		} catch (Exception e) {
@@ -323,7 +323,7 @@ public class ICamera {
 	}
 
 	/**
-	 * 获取照相机旋转角度
+	 * Get a camera angle of rotation
 	 */
 	public int getCameraAngle(Activity activity) {
 		int rotateAngle = 90;
