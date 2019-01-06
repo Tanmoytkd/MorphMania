@@ -2,6 +2,8 @@ package com.facepp.demo;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.PointF;
 import android.graphics.Rect;
 import android.graphics.RectF;
@@ -9,6 +11,7 @@ import android.graphics.SurfaceTexture;
 import android.hardware.Camera;
 import android.hardware.Camera.Parameters;
 import android.hardware.Camera.PreviewCallback;
+import android.media.ExifInterface;
 import android.net.Uri;
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
@@ -149,6 +152,13 @@ public class OpenglActivity extends Activity
         return mediaFile;
     }
 
+    public static Bitmap rotateImage(Bitmap source, float angle) {
+        android.graphics.Matrix matrix = new android.graphics.Matrix();
+        matrix.postRotate(angle);
+        return Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(),
+                matrix, true);
+    }
+
     private Camera.PictureCallback mPicture = new Camera.PictureCallback() {
         @Override
         public void onPictureTaken(byte[] data, Camera camera) {
@@ -162,16 +172,48 @@ public class OpenglActivity extends Activity
             try {
                 FileOutputStream fos = new FileOutputStream(pictureFile);
                 fos.write(data);
+                fos.close();
 
                 pictures.add(Uri.fromFile(pictureFile));
                 Log.d("TKD", ""+pictures.size());
+
+                ExifInterface ei = new ExifInterface(pictureFile.getPath());
+                int orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION,
+                        ExifInterface.ORIENTATION_UNDEFINED);
+
+                Bitmap bitmap = BitmapFactory.decodeFile(pictureFile.getPath());
+                Bitmap rotatedBitmap = null;
+                switch(orientation) {
+
+                    case ExifInterface.ORIENTATION_ROTATE_90:
+                        rotatedBitmap = rotateImage(bitmap, 90);
+                        break;
+
+                    case ExifInterface.ORIENTATION_ROTATE_180:
+                        rotatedBitmap = rotateImage(bitmap, 180);
+                        break;
+
+                    case ExifInterface.ORIENTATION_ROTATE_270:
+                        rotatedBitmap = rotateImage(bitmap, 270);
+                        break;
+
+                    case ExifInterface.ORIENTATION_NORMAL:
+                    default:
+                        rotatedBitmap = rotateImage(bitmap, 270);
+                }
+
+                try (FileOutputStream out = new FileOutputStream(pictureFile)) {
+                    rotatedBitmap.compress(Bitmap.CompressFormat.JPEG, 100, out); // bmp is your Bitmap instance
+                    // PNG is a lossless format, the compression factor (100) is ignored
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
                 Intent resultIntent = getIntent();
-                resultIntent.putExtra("pictures", pictures); //TODO: STUFF
-                Toast.makeText(OpenglActivity.this, pictureFile.getPath(), Toast.LENGTH_LONG).show();
+                resultIntent.putExtra("pictures", pictures);
+
                 setResult(Activity.RESULT_OK, resultIntent);
                 finish();
-
-                fos.close();
             } catch (FileNotFoundException e) {
                 Log.d(TAG, "File not found: " + e.getMessage());
             } catch (IOException e) {

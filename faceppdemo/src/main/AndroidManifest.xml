@@ -22,7 +22,6 @@
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
-
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -38,6 +37,7 @@
             android:name=".FeatureInfoSettingActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".MainActivity" />
+        <activity android:name=".GenerateActivity"></activity>
     </application>
 
 </manifest>

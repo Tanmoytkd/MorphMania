@@ -2,14 +2,19 @@ package com.facepp.demo;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -28,6 +33,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
+import com.bumptech.glide.load.resource.bitmap.TransformationUtils;
+import com.facepp.demo.adapter.PictureGridAdapter;
 import com.facepp.demo.bean.FaceActionInfo;
 import com.facepp.demo.util.ConUtil;
 import com.facepp.demo.util.DialogUtil;
@@ -53,6 +61,8 @@ public class MainActivity extends Activity implements OnClickListener {
     private DialogUtil mDialogUtil;
     ArrayList<Uri> pictures = new ArrayList<>();
     ArrayList<Uri> newpictures = new ArrayList<>();
+    RecyclerView pictureGrid;
+    TextView noImageText;
 
 
     private boolean isStartRecorder, is3DPose, isDebug, isROIDetect, is106Points, isBackCamera, isFaceProperty,
@@ -75,8 +85,10 @@ public class MainActivity extends Activity implements OnClickListener {
     }
 
     private void init() {
-        mDialogUtil = new DialogUtil(this);
+        pictureGrid = findViewById(R.id.pictureGrid);
+        noImageText = findViewById(R.id.noImageText);
 
+        mDialogUtil = new DialogUtil(this);
         cameraSide = findViewById(R.id.cameraSide);
 
         //set title
@@ -166,7 +178,14 @@ public class MainActivity extends Activity implements OnClickListener {
         if(requestCode==101 && resultCode==Activity.RESULT_OK) {
             newpictures = (ArrayList<Uri>)data.getExtras().getSerializable("pictures");
             pictures.addAll(newpictures);
-            Toast.makeText(MainActivity.this, ""+pictures.size(), Toast.LENGTH_LONG).show();
+            if(pictures.size()>0) {
+                noImageText.setVisibility(View.GONE);
+                //TODO: SET ADAPTER
+                pictureGrid.setVisibility(View.VISIBLE);
+
+                pictureGrid.setLayoutManager(new GridLayoutManager(MainActivity.this, 3));
+                pictureGrid.setAdapter(new PictureGridAdapter(MainActivity.this, pictureGrid, pictures));
+            }
         }
         getCameraSizeList();
     }
@@ -225,6 +244,12 @@ public class MainActivity extends Activity implements OnClickListener {
                 img.setImageDrawable(getResources().getDrawable(R.drawable.frontphone));
                 t.setText(R.string.front_camera);
             }
+        }
+
+        if (ID == R.id.landmark_logo) {
+            Intent generateIntent = new Intent(MainActivity.this, GenerateActivity.class);
+            generateIntent.putExtra("pictures", pictures);
+            startActivity(generateIntent);
         }
 
         if (ID == R.id.landmark_enterBtn) {
