@@ -55,6 +55,7 @@
     <string name="front_camera">Front Camera</string>
     <string name="generate_button_text">Generate</string>
     <string name="back_camera">Back Camera</string>
+    <string name="tap_instruction">Face Detected, Tap the screen to take picture</string>
 
 
 </resources>

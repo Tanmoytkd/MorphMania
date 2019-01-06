@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -24,6 +25,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.facepp.demo.bean.FaceActionInfo;
@@ -49,6 +51,8 @@ public class MainActivity extends Activity implements OnClickListener {
     private boolean isShowListView;
     private HashMap<String, Integer> resolutionMap;
     private DialogUtil mDialogUtil;
+    ArrayList<Uri> pictures = new ArrayList<>();
+    ArrayList<Uri> newpictures = new ArrayList<>();
 
 
     private boolean isStartRecorder, is3DPose, isDebug, isROIDetect, is106Points, isBackCamera, isFaceProperty,
@@ -158,6 +162,11 @@ public class MainActivity extends Activity implements OnClickListener {
         if (resultCode == 101) {
             String error = data.getStringExtra("errorcode");
             ConUtil.showToast(this, "sdk init error, code: " + error);
+        }
+        if(requestCode==101 && resultCode==Activity.RESULT_OK) {
+            newpictures = (ArrayList<Uri>)data.getExtras().getSerializable("pictures");
+            pictures.addAll(newpictures);
+            Toast.makeText(MainActivity.this, ""+pictures.size(), Toast.LENGTH_LONG).show();
         }
         getCameraSizeList();
     }

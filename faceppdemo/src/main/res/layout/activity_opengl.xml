@@ -2,6 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#ffffff"
      >
 
 
@@ -53,7 +54,8 @@
         android:layout_width="150dip"
         android:layout_height="150dip"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:visibility="gone"/>
 
     <ImageButton
         android:id="@+id/opengl_layout_addFaceInfo"
@@ -63,6 +65,7 @@
         android:layout_marginBottom="50dp"
         android:layout_alignParentBottom="true"
         android:background="@drawable/face_compare_reg"
+        android:visibility="gone"
         />
 
     <ImageView
@@ -74,7 +77,20 @@
         android:visibility="gone"
         />
 
-
+    <TextView
+        android:id="@+id/tap_instruction"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="42dp"
+        android:shadowColor="#cfcfcf"
+        android:textColor="#ffffff"
+        android:shadowRadius="1.5"
+        android:shadowDx="1"
+        android:shadowDy="1"
+        android:text="@string/tap_instruction"
+        android:textStyle="italic" />
 
 
     <!--<ImageButton-->

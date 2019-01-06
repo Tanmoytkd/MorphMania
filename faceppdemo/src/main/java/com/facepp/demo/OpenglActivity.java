@@ -9,11 +9,13 @@ import android.graphics.SurfaceTexture;
 import android.hardware.Camera;
 import android.hardware.Camera.Parameters;
 import android.hardware.Camera.PreviewCallback;
+import android.net.Uri;
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
 import android.opengl.GLSurfaceView.Renderer;
 import android.opengl.Matrix;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.util.DisplayMetrics;
@@ -42,12 +44,23 @@ import com.facepp.demo.util.Screen;
 import com.facepp.demo.util.SensorEventUtil;
 import com.megvii.facepp.sdk.Facepp;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.net.URI;
 import java.nio.FloatBuffer;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
+
+import static android.provider.MediaStore.Files.FileColumns.MEDIA_TYPE_IMAGE;
+import static com.facepp.demo.facecompare.FaceCompareManager.TAG;
 
 public class OpenglActivity extends Activity
         implements PreviewCallback, Renderer, SurfaceTexture.OnFrameAvailableListener {
@@ -74,6 +87,7 @@ public class OpenglActivity extends Activity
     private float roi_ratio = 0.8f;
     private byte[] newestFeature;
     private byte[] carmeraImgData;
+    public byte[] imageByte;
 
     private int screenWidth;
     private int screenHeight;
@@ -82,7 +96,92 @@ public class OpenglActivity extends Activity
     private FaceActionInfo faceActionInfo;
     private ImageView imgIcon;
 
+    private TextView tapInstruction;
+
     private MediaHelper mMediaHelper;
+    private boolean faceAvailable = false;
+
+    public static final int MEDIA_TYPE_IMAGE = 1;
+    public static final int MEDIA_TYPE_VIDEO = 2;
+    ArrayList<Uri> pictures = new ArrayList<>();
+    public volatile int state = 0;
+
+    /**
+     * Create a file Uri for saving an image or video
+     */
+    private static Uri getOutputMediaFileUri(int type) {
+        return Uri.fromFile(getOutputMediaFile(type));
+    }
+
+    /**
+     * Create a File for saving an image or video
+     */
+    private static File getOutputMediaFile(int type) {
+        // To be safe, you should check that the SDCard is mounted
+        // using Environment.getExternalStorageState() before doing this.
+
+        File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(
+                Environment.DIRECTORY_PICTURES), "MyCameraApp");
+        // This location works best if you want the created images to be shared
+        // between applications and persist after your app has been uninstalled.
+
+        // Create the storage directory if it does not exist
+        if (!mediaStorageDir.exists()) {
+            if (!mediaStorageDir.mkdirs()) {
+                Log.d("MyCameraApp", "failed to create directory");
+                return null;
+            }
+        }
+
+        // Create a media file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(new Date());
+        File mediaFile;
+        if (type == MEDIA_TYPE_IMAGE) {
+            mediaFile = new File(mediaStorageDir.getPath() + File.separator +
+                    "IMG_" + timeStamp + ".jpg");
+        } else if (type == MEDIA_TYPE_VIDEO) {
+            mediaFile = new File(mediaStorageDir.getPath() + File.separator +
+                    "VID_" + timeStamp + ".mp4");
+        } else {
+            return null;
+        }
+
+        return mediaFile;
+    }
+
+    private Camera.PictureCallback mPicture = new Camera.PictureCallback() {
+        @Override
+        public void onPictureTaken(byte[] data, Camera camera) {
+            state=1;
+            File pictureFile = getOutputMediaFile(MEDIA_TYPE_IMAGE);
+            if (pictureFile == null) {
+                Log.d(TAG, "Error creating media file, check storage permissions");
+                return;
+            }
+
+            try {
+                FileOutputStream fos = new FileOutputStream(pictureFile);
+                fos.write(data);
+
+                pictures.add(Uri.fromFile(pictureFile));
+                Log.d("TKD", ""+pictures.size());
+                Intent resultIntent = getIntent();
+                resultIntent.putExtra("pictures", pictures); //TODO: STUFF
+                Toast.makeText(OpenglActivity.this, pictureFile.getPath(), Toast.LENGTH_LONG).show();
+                setResult(Activity.RESULT_OK, resultIntent);
+                finish();
+
+                fos.close();
+            } catch (FileNotFoundException e) {
+                Log.d(TAG, "File not found: " + e.getMessage());
+            } catch (IOException e) {
+                Log.d(TAG, "Error accessing file: " + e.getMessage());
+            }
+            state=0;
+//            mCamera.startPreview();
+
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -136,6 +235,8 @@ public class OpenglActivity extends Activity
         mHandlerThread.start();
         mHandler = new Handler(mHandlerThread.getLooper());
 
+        tapInstruction = findViewById(R.id.tap_instruction);
+
         mGlSurfaceView = (GLSurfaceView) findViewById(R.id.opengl_layout_surfaceview);
         mGlSurfaceView.setEGLContextClientVersion(2);// 创建一个OpenGL ES 2.0
         // context
@@ -143,10 +244,18 @@ public class OpenglActivity extends Activity
         // RENDERMODE_CONTINUOUSLY不停渲染
         // RENDERMODE_WHEN_DIRTY懒惰渲染，需要手动调用 glSurfaceView.requestRender() 才会进行更新
         mGlSurfaceView.setRenderMode(mGlSurfaceView.RENDERMODE_WHEN_DIRTY);// 设置渲染器模式
+
+
         mGlSurfaceView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 autoFocus();
+                if (faceAvailable) {
+//                    savePicture(imageByte);
+                    mCamera.takePicture(null, null, mPicture);
+//                    GLES20.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+//                    mCamera.stopPreview();
+                }
             }
         });
 
@@ -166,7 +275,7 @@ public class OpenglActivity extends Activity
             public void onClick(View v) {
 
                 // 保存feature数据
-                if (mICamera==null||mICamera.mCamera==null){
+                if (mICamera == null || mICamera.mCamera == null) {
                     return;
                 }
                 if (compareFaces == null || compareFaces.length <= 0 || carmeraImgData == null) {
@@ -189,7 +298,6 @@ public class OpenglActivity extends Activity
 
         imgIcon = (ImageView) findViewById(R.id.opengl_layout_icon);
     }
-
 
 
     /**
@@ -256,10 +364,10 @@ public class OpenglActivity extends Activity
             String errorCode = facepp.init(this, ConUtil.getFileContent(this, R.raw.megviifacepp_0_5_2_model), isOneFaceTrackig ? 1 : 0);
 
             //sdk内部其他api已经处理好，可以不判断
-            if (errorCode!=null){
-                Intent intent=new Intent();
-                intent.putExtra("errorcode",errorCode);
-                setResult(101,intent);
+            if (errorCode != null) {
+                Intent intent = new Intent();
+                intent.putExtra("errorcode", errorCode);
+                setResult(101, intent);
                 finish();
                 return;
             }
@@ -336,6 +444,7 @@ public class OpenglActivity extends Activity
         //检测操作放到主线程，防止贴点延迟
         int width = mICamera.cameraWidth;
         int height = mICamera.cameraHeight;
+        imageByte = imgData;
 
         long faceDetectTime_action = System.currentTimeMillis();
         final int orientation = sensorUtil.orientation;
@@ -353,11 +462,27 @@ public class OpenglActivity extends Activity
 
         final Facepp.Face[] faces = facepp.detect(imgData, width, height, Facepp.IMAGEMODE_NV21);
         final long algorithmTime = System.currentTimeMillis() - faceDetectTime_action;
-        if (faces != null) {
+        if (faces == null) {
+            faceAvailable = false;
+            runOnUiThread(() -> {
+                tapInstruction.setText("No faces detected.");
+            });
+        } else {
             long actionMaticsTime = System.currentTimeMillis();
             ArrayList<ArrayList> pointsOpengl = new ArrayList<ArrayList>();
             ArrayList<FloatBuffer> rectsOpengl = new ArrayList<FloatBuffer>();
-            if (faces.length > 0) {
+            if (faces.length == 0) {
+                faceAvailable = false;
+                runOnUiThread(() -> {
+                    tapInstruction.setText("No faces detected.");
+                });
+            } else if (faces.length > 0) {
+                faceAvailable = true;
+                runOnUiThread(() -> {
+                    String instruction = String.valueOf(faces[0].points.length) + " points detected. Tap to take picture";
+                    tapInstruction.setText(instruction);
+                });
+
                 for (int c = 0; c < faces.length; c++) {
 
                     if (is106Points)
@@ -383,7 +508,7 @@ public class OpenglActivity extends Activity
                         float x = (faces[c].points[i].x / width) * 2 - 1;
                         if (isBackCamera)
                             x = -x;
-                        float y = (faces[c].points[i].y / height) * 2-1;
+                        float y = (faces[c].points[i].y / height) * 2 - 1;
                         float[] pointf = new float[]{y, x, 0.0f};
                         FloatBuffer fb = mCameraMatrix.floatBufferUtil(pointf);
                         triangleVBList.add(fb);
@@ -430,8 +555,6 @@ public class OpenglActivity extends Activity
 
                     confidence = 0.0f;
                     if (faces.length > 0) {
-
-
                         //compare ui
                         runOnUiThread(new Runnable() {
                             @Override
@@ -502,26 +625,26 @@ public class OpenglActivity extends Activity
 
                                                 PointF noseP = null;
                                                 PointF eyebrowP = null;
-                                                if (is106Points){
-                                                    noseP=face.points[46];
-                                                    eyebrowP=face.points[37];
-                                                }else{
-                                                    noseP=face.points[34];
-                                                    eyebrowP=face.points[19];
+                                                if (is106Points) {
+                                                    noseP = face.points[46];
+                                                    eyebrowP = face.points[37];
+                                                } else {
+                                                    noseP = face.points[34];
+                                                    eyebrowP = face.points[19];
                                                 }
                                                 boolean isVertical;
-                                                if (orientation==0||orientation==3){
-                                                    isVertical=true;
-                                                }else{
-                                                    isVertical=false;
+                                                if (orientation == 0 || orientation == 3) {
+                                                    isVertical = true;
+                                                } else {
+                                                    isVertical = false;
                                                 }
-                                                int tops= (int) (((mICamera.cameraWidth-(isVertical?eyebrowP.x:noseP.x)))*(mGlSurfaceView.getHeight()*1.0f/mICamera.cameraWidth));
-                                                int lefts= (int) ((mICamera.cameraHeight-(isVertical?noseP.y:eyebrowP.y))*(mGlSurfaceView.getWidth()*1.0f/mICamera.cameraHeight));
-                                                if (isBackCamera){
-                                                    tops=mGlSurfaceView.getHeight()-tops;
+                                                int tops = (int) (((mICamera.cameraWidth - (isVertical ? eyebrowP.x : noseP.x))) * (mGlSurfaceView.getHeight() * 1.0f / mICamera.cameraWidth));
+                                                int lefts = (int) ((mICamera.cameraHeight - (isVertical ? noseP.y : eyebrowP.y)) * (mGlSurfaceView.getWidth() * 1.0f / mICamera.cameraHeight));
+                                                if (isBackCamera) {
+                                                    tops = mGlSurfaceView.getHeight() - tops;
                                                 }
-                                                tops=tops-txtHeight/2;
-                                                lefts=lefts-txtWidth/2;
+                                                tops = tops - txtHeight / 2;
+                                                lefts = lefts - txtWidth / 2;
                                                 params.leftMargin = lefts;
                                                 params.topMargin = tops;
                                                 featureTargetText.setLayoutParams(params);
@@ -550,7 +673,7 @@ public class OpenglActivity extends Activity
                                 for (int i = 0; i < tvFeatures.size(); i++) {
                                     ((RelativeLayout) mGlSurfaceView.getParent()).removeView(tvFeatures.get(i));
                                 }
-                                prefaceCount=0;
+                                prefaceCount = 0;
                             }
                         });
                         mPointsMatrix.rect = null;
@@ -591,13 +714,12 @@ public class OpenglActivity extends Activity
         mCamera = null;
 
 
-
         finish();
     }
 
     @Override
     protected void onDestroy() {
-        if (mMediaHelper!=null)
+        if (mMediaHelper != null)
             mMediaHelper.stopRecording();
         super.onDestroy();
         mHandler.post(new Runnable() {
@@ -753,7 +875,6 @@ public class OpenglActivity extends Activity
         FloatBuffer buffer = mCameraMatrix.floatBufferUtil(tempFace);
         return buffer;
     }
-
 
 
 }

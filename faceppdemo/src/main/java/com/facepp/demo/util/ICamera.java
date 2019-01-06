@@ -36,7 +36,7 @@ public class ICamera {
 	}
 
 	/**
-	 * 打开相机
+	 * turn on camera
 	 */
 	public Camera openCamera(boolean isBackCamera, Activity activity,
 							 HashMap<String, Integer> resolutionMap) {
@@ -81,7 +81,7 @@ public class ICamera {
 		return (cameraId!=1);
 	}
 
-	// 通过屏幕参数、相机预览尺寸计算布局参数
+	// Calculate layout parameters by screen parameters and camera preview size
 	public RelativeLayout.LayoutParams getLayoutParam() {
 		float scale = cameraWidth * 1.0f / cameraHeight;
 
@@ -101,7 +101,7 @@ public class ICamera {
 	}
 
 	/**
-	 * 开始检测脸
+	 * Start detecting face
 	 */
 	public void actionDetect(Camera.PreviewCallback mActivity) {
 		if (mCamera != null) {
@@ -176,7 +176,7 @@ public class ICamera {
 	}
 
 	/**
-	 * 通过传入的宽高算出最接近于宽高值的相机大小
+	 * Calculate the camera size closest to the width and height by the width and width of the incoming
 	 */
 	private Camera.Size calBestPreviewSize(Camera.Parameters camPara,
 										   final int width, final int height) {
@@ -203,7 +203,7 @@ public class ICamera {
 	}
 
 	/**
-	 * 打开前置或后置摄像头
+	 * Open the front or rear camera
 	 */
 	public Camera getCameraSafely(int cameraId) {
 		Camera camera;
